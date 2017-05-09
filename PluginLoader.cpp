@@ -13,7 +13,7 @@ PluginLoader::PluginLoader(std::string &pluginFolder) {
 
     if (!this->pluginFolder.exists()) {
         std::cout << "Creating folder: " << pluginFolder << std::endl;
-        this->pluginFolder.mkdir(".");
+        QDir().mkdir(this->pluginFolder.path());
     }
 
 }
@@ -29,10 +29,10 @@ PluginLoader::~PluginLoader() {
 void PluginLoader::loadPlugins() {
 
 
-    QStringList files = pluginFolder.entryList();
+    QStringList files = pluginFolder.entryList(QStringList()<<"*.dylib" << "*.so" << "*.dll");
 
 
-    for (QString file : files) {
+    for (QString& file : files) {
 
         QPluginLoader *loader = new QPluginLoader(file);
 
@@ -40,7 +40,7 @@ void PluginLoader::loadPlugins() {
 
         if (qpl) {
 
-            std::cout << "file loaded" << std::endl;
+            std::cout << "file " << file.toStdString()<< " loaded "<<std::endl;
 
             IPlugin *iPlugin = qobject_cast<IPlugin *>(qpl);
 
@@ -80,13 +80,12 @@ void PluginLoader::unloadPlugins() {
 
     for (std::unordered_map<std::string, PluginHandle>::iterator it = pluginHandles.begin();
          it != pluginHandles.end();) {
-        it->second.pluginLoader->unload();
         it->second.destroy();
         pluginHandles.erase(it++);
     }
 
 
-    pluginHandles.clear();
+    //pluginHandles.clear();
     hasLoaded = false;
 }
 

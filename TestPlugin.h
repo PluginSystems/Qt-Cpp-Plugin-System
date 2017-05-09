@@ -14,8 +14,7 @@ class TestPlugin : public QObject, public IPlugin {
 
 Q_OBJECT
     Q_INTERFACES(IPlugin)
-    Q_PLUGIN_METADATA(IID
-                              "de.ysl3000.TestPlugin")
+    Q_PLUGIN_METADATA(IID "de.ysl3000.TestPlugin")
 
 public:
     void onEnable() const;

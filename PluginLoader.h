@@ -21,8 +21,9 @@ struct PluginHandle{
     IPlugin* plugin;
 
     void destroy(){
-        delete(pluginLoader);
         delete(plugin);
+        pluginLoader->unload();
+        delete(pluginLoader);
     }
 
 };
@@ -50,8 +51,6 @@ public:
     void disablePlugins();
 
     IPlugin& getPlugin(std::string pluginName);
-
-
 };
 
 
