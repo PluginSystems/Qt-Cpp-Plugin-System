@@ -26,4 +26,4 @@ public:
 };
 
 
-#endif //QTPLUGINTEST_TESTPLUGIN_H
+#endif QTPLUGINTEST_TESTPLUGIN_H

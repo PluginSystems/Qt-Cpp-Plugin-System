@@ -1,15 +1,10 @@
 #include <iostream>
-#include <QApplication>
 #include "PluginLoader.h"
 
 
 int main(int argc, char **argv) {
-    //QApplication app(argc,argv);
 
-
-    std::string path("plugin");
-
-    PluginLoader loader(path);
+    PluginLoader loader("plugin");
 
     loader.loadPlugins();
     loader.enablePlugins();
@@ -18,7 +13,5 @@ int main(int argc, char **argv) {
     loader.unloadPlugins();
 
 
-    //app.aboutQt();
-
-    return 0 ;//app.exec();
+    return 0 ;
 }

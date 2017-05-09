@@ -38,7 +38,7 @@ private:
 
 public:
 
-    PluginLoader(std::string &pluginFolder);
+    PluginLoader(const std::string &pluginFolder);
 
     ~PluginLoader();
 

@@ -14,8 +14,6 @@ class IPlugin {
 
 public:
 
-
-
     virtual ~IPlugin() {};
 
     virtual void onEnable() const =0;
@@ -25,6 +23,7 @@ public:
     virtual std::string getName() const  =0;
 
 };
+// is used to inform the Qt metaStorage that this interface is existing
 Q_DECLARE_INTERFACE(IPlugin,"de.ysl3000.IPlugin/1.0")
 
 #endif //QTPLUGINTEST_IPLUGIN_H

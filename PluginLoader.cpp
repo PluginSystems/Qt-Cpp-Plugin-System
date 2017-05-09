@@ -8,7 +8,7 @@
 #include "PluginLoader.h"
 
 
-PluginLoader::PluginLoader(std::string &pluginFolder) {
+PluginLoader::PluginLoader(const std::string &pluginFolder) {
     this->pluginFolder = QDir(QString::fromStdString(pluginFolder));
 
     if (!this->pluginFolder.exists()) {
@@ -83,9 +83,6 @@ void PluginLoader::unloadPlugins() {
         it->second.destroy();
         pluginHandles.erase(it++);
     }
-
-
-    //pluginHandles.clear();
     hasLoaded = false;
 }
 
