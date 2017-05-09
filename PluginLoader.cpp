@@ -9,11 +9,11 @@
 
 
 PluginLoader::PluginLoader(std::string &pluginFolder) {
-    this->pluginFolder = pluginFolder;
+    this->pluginFolder = QDir(QString::fromStdString(pluginFolder));
 
-    if(!QDir(QString::fromStdString(pluginFolder)).exists()){
+    if (!this->pluginFolder.exists()) {
         std::cout << "Creating folder: " << pluginFolder << std::endl;
-        QDir().mkdir(QString::fromStdString(pluginFolder));
+        this->pluginFolder.mkdir(".");
     }
 
 }
@@ -29,17 +29,12 @@ PluginLoader::~PluginLoader() {
 void PluginLoader::loadPlugins() {
 
 
-    QDir dir = QDir::root();
-
-    dir.cd(QString::fromStdString(pluginFolder));
-
-
-    QStringList files = dir.entryList();
+    QStringList files = pluginFolder.entryList();
 
 
     for (QString file : files) {
 
-        QPluginLoader* loader = new QPluginLoader(file);
+        QPluginLoader *loader = new QPluginLoader(file);
 
         QObject *qpl = loader->instance();
 
@@ -47,9 +42,9 @@ void PluginLoader::loadPlugins() {
 
             std::cout << "file loaded" << std::endl;
 
-            IPlugin* iPlugin = qobject_cast<IPlugin *>(qpl);
+            IPlugin *iPlugin = qobject_cast<IPlugin *>(qpl);
 
-            if(iPlugin){
+            if (iPlugin) {
 
 
                 PluginHandle handle;
@@ -58,10 +53,15 @@ void PluginLoader::loadPlugins() {
                 handle.plugin = iPlugin;
 
                 pluginHandles[iPlugin->getName()] = handle;
+            } else {
+                delete (iPlugin);
+
+                std::cout << "Plugin not a IPlugin" << std::endl;
             }
-            delete(iPlugin);
 
         } else {
+
+            std::cout << " not a Plugin file " << file.toStdString() << std::endl;
             delete (qpl);
         }
     }
@@ -71,14 +71,15 @@ void PluginLoader::loadPlugins() {
 }
 
 
-IPlugin& PluginLoader::getPlugin(std::string pluginName) {
+IPlugin &PluginLoader::getPlugin(std::string pluginName) {
     return *pluginHandles[pluginName].plugin;
 }
 
 
 void PluginLoader::unloadPlugins() {
 
-    for (std::unordered_map<std::string,PluginHandle>::iterator it=pluginHandles.begin(); it!=pluginHandles.end();){
+    for (std::unordered_map<std::string, PluginHandle>::iterator it = pluginHandles.begin();
+         it != pluginHandles.end();) {
         it->second.pluginLoader->unload();
         it->second.destroy();
         pluginHandles.erase(it++);

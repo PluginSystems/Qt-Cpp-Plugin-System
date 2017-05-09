@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <QtPlugin>
-#include "../IPlugin.h"
+#include "IPlugin.h"
 
 class TestPlugin : public QObject, public IPlugin {
 

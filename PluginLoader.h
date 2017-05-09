@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <string>
 #include <QString>
+#include <QDir>
 #include <QPluginLoader>
 #include "IPlugin.h"
 
@@ -29,7 +30,7 @@ struct PluginHandle{
 private:
     std::unordered_map<std::string, PluginHandle> pluginHandles;
 
-    std::string pluginFolder;
+    QDir pluginFolder;
 
     bool hasLoaded = false;
 
