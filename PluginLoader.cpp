@@ -29,10 +29,10 @@ PluginLoader::~PluginLoader() {
 void PluginLoader::loadPlugins() {
 
 
-    QStringList files = pluginFolder.entryList(QStringList()<<"*.dylib" << "*.so" << "*.dll");
+    QStringList files = pluginFolder.entryList(QStringList() << "*.dylib" << "*.so" << "*.dll");
 
 
-    for (QString& file : files) {
+    for (QString &file : files) {
 
         QPluginLoader *loader = new QPluginLoader(file);
 
@@ -40,7 +40,7 @@ void PluginLoader::loadPlugins() {
 
         if (qpl) {
 
-            std::cout << "file " << file.toStdString()<< " loaded "<<std::endl;
+            std::cout << "file " << file.toStdString() << " loaded " << std::endl;
 
             IPlugin *iPlugin = qobject_cast<IPlugin *>(qpl);
 
@@ -55,6 +55,7 @@ void PluginLoader::loadPlugins() {
                 pluginHandles[iPlugin->getName()] = handle;
             } else {
                 delete (iPlugin);
+                loader->unload();
 
                 std::cout << "Plugin not a IPlugin" << std::endl;
             }
@@ -63,6 +64,7 @@ void PluginLoader::loadPlugins() {
 
             std::cout << " not a Plugin file " << file.toStdString() << std::endl;
             delete (qpl);
+            loader->unload();
         }
     }
 
@@ -81,6 +83,7 @@ void PluginLoader::unloadPlugins() {
     for (std::unordered_map<std::string, PluginHandle>::iterator it = pluginHandles.begin();
          it != pluginHandles.end();) {
         it->second.destroy();
+        it->second.pluginLoader->unload();
         pluginHandles.erase(it++);
     }
     hasLoaded = false;
