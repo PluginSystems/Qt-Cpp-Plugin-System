@@ -56,6 +56,7 @@ void PluginLoader::loadPlugins() {
             } else {
                 delete (iPlugin);
                 loader->unload();
+                delete (loader);
 
                 std::cout << "Plugin not a IPlugin" << std::endl;
             }
