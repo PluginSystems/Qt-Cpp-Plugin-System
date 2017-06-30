@@ -66,6 +66,7 @@ void PluginLoader::loadPlugins() {
             std::cout << " not a Plugin file " << file.toStdString() << std::endl;
             delete (qpl);
             loader->unload();
+            delete (loader);
         }
     }
 
