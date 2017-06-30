@@ -53,21 +53,17 @@ void PluginLoader::loadPlugins() {
                 handle.plugin = iPlugin;
 
                 pluginHandles[iPlugin->getName()] = handle;
-            } else {
+                continue;
+            } 
                 delete (iPlugin);
-                loader->unload();
-                delete (loader);
-
                 std::cout << "Plugin not a IPlugin" << std::endl;
-            }
-
-        } else {
+        
+        } 
 
             std::cout << " not a Plugin file " << file.toStdString() << std::endl;
             delete (qpl);
             loader->unload();
             delete (loader);
-        }
     }
 
     hasLoaded = true;
