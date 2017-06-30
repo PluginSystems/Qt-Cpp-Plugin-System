@@ -82,8 +82,7 @@ void PluginLoader::unloadPlugins() {
 
     for (std::unordered_map<std::string, PluginHandle>::iterator it = pluginHandles.begin();
          it != pluginHandles.end();) {
-        it->second.destroy();
-        it->second.pluginLoader->unload();
+        it->second.destroy(); // the function destroy in struct handles unloading of the plugin
         pluginHandles.erase(it++);
     }
     hasLoaded = false;
