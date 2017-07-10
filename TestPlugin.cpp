@@ -5,16 +5,16 @@
 #include "TestPlugin.h"
 
 void TestPlugin::onEnable() const {
-    std::cout << "Shitty first plugin in QT is enabled" << std::endl;
+    std::cout << getName() <<" first plugin in QT is enabled" << std::endl;
 }
 
 
 void TestPlugin::onDisable() const {
-    std::cout << "Shitty first plugin in QT is disabled" << std::endl;
+    std::cout << getName()<<" first plugin in QT is disabled" << std::endl;
 
 }
 
 
 std::string TestPlugin::getName() const {
-    return "ShittyPlugin";
+    return "FirstPlugin";
 }

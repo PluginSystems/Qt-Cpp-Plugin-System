@@ -40,12 +40,11 @@ void PluginLoader::loadPlugins() {
 
         if (qpl) {
 
-            std::cout << "file " << file.toStdString() << " loaded " << std::endl;
+
 
             IPlugin *iPlugin = qobject_cast<IPlugin *>(qpl);
 
             if (iPlugin) {
-
 
                 PluginHandle handle;
 
@@ -53,6 +52,8 @@ void PluginLoader::loadPlugins() {
                 handle.plugin = iPlugin;
 
                 pluginHandles[iPlugin->getName()] = handle;
+                std::cout << "file " << iPlugin->getName() << " loaded " << std::endl;
+
             } else {
                 delete (iPlugin);
                 loader->unload();
@@ -83,7 +84,7 @@ void PluginLoader::unloadPlugins() {
     for (std::unordered_map<std::string, PluginHandle>::iterator it = pluginHandles.begin();
          it != pluginHandles.end();) {
         it->second.destroy();
-        it->second.pluginLoader->unload();
+        std::cout << "file " << it->first << " unloaded " << std::endl;
         pluginHandles.erase(it++);
     }
     hasLoaded = false;
