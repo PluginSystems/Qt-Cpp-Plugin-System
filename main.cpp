@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     benchmarks.push_back(std::make_shared<EnableAndDisableBenchmark>(EnableAndDisableBenchmark(loader)));
 
 
-    unsigned long count = 100;
+    unsigned long count = 250;
 
     for (std::shared_ptr<TestCase> testCase: benchmarks) {
         testCase->setUp();
