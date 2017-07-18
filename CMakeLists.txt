@@ -25,7 +25,6 @@ add_library(Plugin SHARED ${LIBRARY_SOURCES})
 # Searching if libraries
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Core REQUIRED)
-find_package(hayai REQUIRED)
 
 
 # linking the libraries Qt5::* to QtPluginTest
