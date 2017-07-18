@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include <fstream>
 #include "PluginLoader.h"
 #include "tests/benchmarks/LoadAndUnloadBenchmark.h"
 #include "tests/benchmarks/EnableAndDisableBenchmark.h"
@@ -9,8 +11,11 @@ int main(int argc, char **argv) {
     std::list<std::shared_ptr<TestCase>> benchmarks;
 
 
-    benchmarks.push_back(std::shared_ptr<TestCase>(new LoadAndUnloadBenchmark()));
-    benchmarks.push_back(std::shared_ptr<TestCase>(new EnableAndDisableBenchmark()));
+    PluginLoader loader("plugin");
+
+
+    benchmarks.push_back(std::make_shared<LoadAndUnloadBenchmark>(LoadAndUnloadBenchmark(loader)));
+    benchmarks.push_back(std::make_shared<EnableAndDisableBenchmark>(EnableAndDisableBenchmark(loader)));
 
 
     int count = 100;
@@ -21,12 +26,25 @@ int main(int argc, char **argv) {
     }
 
 
-    std::ostream &out = std::cout;
+    std::stringstream  filename;
+
+
+    filename << "result_"<< count << "_" << std::chrono::system_clock::now().time_since_epoch().count() << ".csv";
+
+
+    std::fstream resultFile;
+
+
+    resultFile.open(filename.str());
+
+
 
 
     for (std::shared_ptr<TestCase> finishedBenchmark : benchmarks) {
-        finishedBenchmark->printStats(out);
+        finishedBenchmark->printStats(resultFile);
     }
+
+    resultFile.close();
 
     return 0;
 }

@@ -29,9 +29,14 @@ private:
 protected:
 
 
+    PluginLoader& loader;
+
     virtual void runTest(unsigned long cycle)=0;
 
     virtual std::string getName()=0;
+
+
+
 
 
     void startTimer() {
@@ -57,13 +62,19 @@ protected:
 
 public:
 
+    TestCase(PluginLoader& pluginLoader): loader(pluginLoader){
+    }
+
+    virtual void setUp(){}
+    virtual void tearDown(){}
+
 
     void runTestFully(unsigned long cycles) {
         benchmarkRuns = std::vector<BenchmarkRun>(cycles);
 
         for (unsigned long i = 0; i < cycles; i++) {
             benchmarkRuns.push_back(BenchmarkRun());
-            std::cout << "Test in run " << i << " started" << std::endl;
+            std::cout << "Test in run " << (i+1) << " started" << std::endl;
             runTest(i);
         }
     }

@@ -12,8 +12,11 @@ class LoadAndUnloadBenchmark : public TestCase {
 
 protected:
 
+public:
+    LoadAndUnloadBenchmark(PluginLoader &pluginLoader) : TestCase(pluginLoader) {}
+
+protected:
     void runTest(unsigned long cycle) override {
-        PluginLoader loader("plugin");
         startTimer();
         loader.loadPlugins();
 
@@ -21,7 +24,7 @@ protected:
         loader.unloadPlugins();
 
         stopTimer();
-        defineBenchmarkPoint(cycle,getName());
+        defineBenchmarkPoint(cycle,getName()+"_"+std::to_string(cycle+1));
         resetTimer();
     }
 

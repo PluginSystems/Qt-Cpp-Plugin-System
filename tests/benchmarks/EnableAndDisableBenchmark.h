@@ -13,22 +13,34 @@
 
 class EnableAndDisableBenchmark : public TestCase{
 
+
+public:
+
+    EnableAndDisableBenchmark(PluginLoader& pluginLoader) : TestCase(pluginLoader) {
+
+    }
+
+    void setUp() override {
+        loader.loadPlugins();
+    }
+
+    void tearDown() override {
+        loader.unloadPlugins();
+    }
+
 protected:
 
     void runTest(unsigned long cycle) override {
-        PluginLoader loader("plugin");
-        loader.loadPlugins();
 
         startTimer();
+
         loader.enablePlugins();
 
         loader.disablePlugins();
+
         stopTimer();
-
-        defineBenchmarkPoint(cycle,getName());
+        defineBenchmarkPoint(cycle, getName()+"_"+std::to_string(cycle+1));
         resetTimer();
-
-        loader.unloadPlugins();
 
     }
 
