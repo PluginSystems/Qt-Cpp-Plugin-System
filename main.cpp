@@ -18,33 +18,31 @@ int main(int argc, char **argv) {
     benchmarks.push_back(std::make_shared<EnableAndDisableBenchmark>(EnableAndDisableBenchmark(loader)));
 
 
-    int count = 100;
+    unsigned long count = 100;
 
     for (std::shared_ptr<TestCase> testCase: benchmarks) {
+        testCase->setUp();
         testCase->runTestFully(count);
+        testCase->tearDown();
         std::cout << "Test run finished" << std::endl;
     }
 
 
+    std::fstream resultFileStream;
+
     std::stringstream  filename;
 
-
-    filename << "result_"<< count << "_" << std::chrono::system_clock::now().time_since_epoch().count() << ".csv";
-
-
-    std::fstream resultFile;
+    filename << "./results_"<< count << "_" << std::chrono::system_clock::now().time_since_epoch().count() << ".csv";
 
 
-    resultFile.open(filename.str());
-
-
-
+    resultFileStream.open(filename.str());
 
     for (std::shared_ptr<TestCase> finishedBenchmark : benchmarks) {
-        finishedBenchmark->printStats(resultFile);
+        finishedBenchmark->printStats(resultFileStream);
     }
+    benchmarks.clear();
 
-    resultFile.close();
+    resultFileStream.close();
 
     return 0;
 }

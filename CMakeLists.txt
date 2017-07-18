@@ -13,8 +13,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 # set an alias as a collection of specified sourcefiles
-set(SOURCE_FILES main.cpp PluginLoader.cpp PluginLoader.h IPlugin.h tests/TestCase.h tests/BenchmarkRun.cpp tests/BenchmarkRun.h tests/util/Stopwatch.cpp tests/util/Stopwatch.h tests/benchmarks/LoadAndUnloadBenchmark.h)
-set(LIBRARY_SOURCES TestPlugin.cpp TestPlugin.h IPlugin.h tests/benchmarks/EnableAndDisableBenchmark.h)
+set(SOURCE_FILES main.cpp PluginLoader.cpp PluginLoader.h
+        IPlugin.h tests/TestCase.h tests/BenchmarkRun.cpp tests/BenchmarkRun.h tests/util/Stopwatch.cpp tests/util/Stopwatch.h
+        tests/benchmarks/LoadAndUnloadBenchmark.h tests/benchmarks/EnableAndDisableBenchmark.h)
+set(LIBRARY_SOURCES TestPlugin.cpp TestPlugin.h IPlugin.h)
 
 # define project with named sourcefiles as an executable project
 add_executable(QtPluginTest ${SOURCE_FILES})
