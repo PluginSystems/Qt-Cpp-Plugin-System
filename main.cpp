@@ -28,11 +28,11 @@ int main(int argc, char **argv) {
     }
 
 
-    std::fstream resultFileStream;
+    std::ofstream resultFileStream;
 
     std::stringstream  filename;
 
-    filename << "./results_"<< count << "_" << std::chrono::system_clock::now().time_since_epoch().count() << ".csv";
+    filename << "results_"<< count << "_" << std::chrono::system_clock::now().time_since_epoch().count() << ".csv";
 
 
     resultFileStream.open(filename.str());
