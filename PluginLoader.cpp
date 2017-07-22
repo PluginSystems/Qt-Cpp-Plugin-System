@@ -15,7 +15,6 @@ PluginLoader::PluginLoader(const std::string &pluginFolder) {
         std::cout << "Creating folder: " << pluginFolder << std::endl;
         QDir().mkdir(this->pluginFolder.path());
     }
-
 }
 
 PluginLoader::~PluginLoader() {
@@ -53,7 +52,6 @@ void PluginLoader::loadPlugins() {
 
                 pluginHandles[iPlugin->getName()] = handle;
                 std::cout << "file " << iPlugin->getName() << " loaded " << std::endl;
-
             } else {
                 delete (iPlugin);
                 loader->unload();

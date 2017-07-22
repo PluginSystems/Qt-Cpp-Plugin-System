@@ -5,7 +5,6 @@
 #ifndef QTPLUGINTEST_PLUGINLOADER_H
 #define QTPLUGINTEST_PLUGINLOADER_H
 
-
 #include <unordered_map>
 #include <string>
 #include <QString>
