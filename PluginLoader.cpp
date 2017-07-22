@@ -34,42 +34,28 @@ void PluginLoader::loadPlugins() {
 
     for (QString &file : files) {
 
-        QPluginLoader *loader = new QPluginLoader(file);
+        QLibrary lib(file);
+        typedef IPlugin* (*create)();
+        create create1  = (create)lib.resolve("create");
 
-        QObject *qpl = loader->instance();
+        if(create1){
 
-        if (qpl) {
+            PluginHandle handle;
 
-            std::cout << "file " << file.toStdString() << " loaded " << std::endl;
+            handle.pluginLoader = &lib;
+            handle.plugin = create1();
 
-            IPlugin *iPlugin = qobject_cast<IPlugin *>(qpl);
+            pluginHandles[handle.plugin->getName()] = handle;
+            handle.plugin->onEnable();
+            handle.plugin->onDisable();
 
-            if (iPlugin) {
-
-
-                PluginHandle handle;
-
-                handle.pluginLoader = loader;
-                handle.plugin = iPlugin;
-
-                pluginHandles[iPlugin->getName()] = handle;
-                continue;
-            } 
-                delete (iPlugin);
-                std::cout << "Plugin not a IPlugin" << std::endl;
-        
-        } 
-
-            std::cout << " not a Plugin file " << file.toStdString() << std::endl;
-            delete (qpl);
-            loader->unload();
-            delete (loader);
+            std::cout << "file " << handle.plugin->getName() << " loaded " << std::endl;
+        }
     }
 
     hasLoaded = true;
 
 }
-
 
 IPlugin &PluginLoader::getPlugin(std::string pluginName) {
     return *pluginHandles[pluginName].plugin;

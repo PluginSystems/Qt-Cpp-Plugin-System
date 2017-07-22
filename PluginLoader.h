@@ -17,13 +17,13 @@ class PluginLoader {
 
 struct PluginHandle{
 
-    QPluginLoader* pluginLoader;
+    QLibrary* pluginLoader;
     IPlugin* plugin;
 
     void destroy(){
         delete(plugin);
         pluginLoader->unload();
-        delete(pluginLoader);
+        //delete(pluginLoader);
     }
 
 };
