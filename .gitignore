@@ -1,4 +1,11 @@
 cmake-build-debug
 cmake-build-default
 .idea
-
+results_*.csv
+plugin
+*_autogen
+Makefile
+QtPluginTest
+QtPlugintest.cbp
+CMakeCache.txt
+cmake_install.cmake

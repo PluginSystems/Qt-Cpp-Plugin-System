@@ -28,12 +28,12 @@ PluginLoader::~PluginLoader() {
 void PluginLoader::loadPlugins() {
 
 
-    QStringList files = pluginFolder.entryList(QStringList() << "*.dylib" << "*.so" << "*.dll");
+    QFileInfoList files = pluginFolder.entryInfoList(QStringList() << "*.dylib" << "*.so" << "*.dll");
 
 
-    for (QString &file : files) {
+    for (QFileInfo &file : files) {
 
-        QPluginLoader *loader = new QPluginLoader(QFileInfo(pluginFolder,file).absoluteFilePath());
+        QPluginLoader *loader = new QPluginLoader(file.absoluteFilePath());
 
 
 
@@ -63,7 +63,7 @@ void PluginLoader::loadPlugins() {
 
         } else {
 
-            std::cout << " not a Plugin file " << file.toStdString() << std::endl;
+            std::cout << " not a Plugin file " << file.fileName().toStdString() << std::endl;
             delete (qpl);
             loader->unload();
         }
