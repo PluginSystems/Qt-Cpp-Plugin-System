@@ -15,7 +15,6 @@ PluginLoader::PluginLoader(const std::string &pluginFolder) {
         std::cout << "Creating folder: " << pluginFolder << std::endl;
         QDir().mkdir(this->pluginFolder.path());
     }
-
 }
 
 PluginLoader::~PluginLoader() {
@@ -29,33 +28,51 @@ PluginLoader::~PluginLoader() {
 void PluginLoader::loadPlugins() {
 
 
-    QStringList files = pluginFolder.entryList(QStringList() << "*.dylib" << "*.so" << "*.dll");
+    QFileInfoList files = pluginFolder.entryInfoList(QStringList() << "*.dylib" << "*.so" << "*.dll");
 
 
-    for (QString &file : files) {
+    for (QFileInfo &file : files) {
 
-        QLibrary lib(file);
-        typedef IPlugin* (*create)();
-        create create1  = (create)lib.resolve("create");
+        QPluginLoader *loader = new QPluginLoader(file.absoluteFilePath());
 
-        if(create1){
 
-            PluginHandle handle;
 
-            handle.pluginLoader = &lib;
-            handle.plugin = create1();
+        QObject *qpl = loader->instance();
 
-            pluginHandles[handle.plugin->getName()] = handle;
-            handle.plugin->onEnable();
-            handle.plugin->onDisable();
+        if (qpl) {
 
-            std::cout << "file " << handle.plugin->getName() << " loaded " << std::endl;
+
+
+            IPlugin *iPlugin = qobject_cast<IPlugin *>(qpl);
+
+            if (iPlugin) {
+
+                PluginHandle handle;
+
+                handle.pluginLoader = loader;
+                handle.plugin = iPlugin;
+
+                pluginHandles[iPlugin->getName()] = handle;
+                std::cout << "file " << iPlugin->getName() << " loaded " << std::endl;
+            } else {
+                delete (iPlugin);
+                loader->unload();
+
+                std::cout << "Plugin not a IPlugin" << std::endl;
+            }
+
+        } else {
+
+            std::cout << " not a Plugin file " << file.fileName().toStdString() << std::endl;
+            delete (qpl);
+            loader->unload();
         }
     }
 
     hasLoaded = true;
 
 }
+
 
 IPlugin &PluginLoader::getPlugin(std::string pluginName) {
     return *pluginHandles[pluginName].plugin;
@@ -66,7 +83,8 @@ void PluginLoader::unloadPlugins() {
 
     for (std::unordered_map<std::string, PluginHandle>::iterator it = pluginHandles.begin();
          it != pluginHandles.end();) {
-        it->second.destroy(); // the function destroy in struct handles unloading of the plugin
+        it->second.destroy();
+        std::cout << "file " << it->first << " unloaded " << std::endl;
         pluginHandles.erase(it++);
     }
     hasLoaded = false;

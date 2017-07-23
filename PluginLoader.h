@@ -17,7 +17,7 @@ class PluginLoader {
 
 struct PluginHandle{
 
-    QLibrary* pluginLoader;
+    QPluginLoader* pluginLoader;
     IPlugin* plugin;
 
     void destroy(){
