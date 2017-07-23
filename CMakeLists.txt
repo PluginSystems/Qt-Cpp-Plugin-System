@@ -18,13 +18,14 @@ set(SOURCE_FILES main.cpp PluginLoader.cpp PluginLoader.h
         tests/benchmarks/LoadAndUnloadBenchmark.h tests/benchmarks/EnableAndDisableBenchmark.h)
 
 set(first FirstPlugin.cpp FirstPlugin.h IPlugin.h)
-#set(second Sec.cpp TestPlugin.h IPlugin.h)
+set(second SecondPlugin.cpp SecondPlugin.h IPlugin.h)
 
 # define project with named sourcefiles as an executable project
 add_executable(QtPluginTest ${SOURCE_FILES})
 
 # define project with named library sourcefiles as a library project
 add_library(FirstPlugin SHARED ${first})
+add_library(SecondPlugin SHARED ${second})
 
 # Searching if libraries
 find_package(Qt5Widgets REQUIRED)
@@ -35,4 +36,5 @@ find_package(Qt5Core REQUIRED)
 target_link_libraries(QtPluginTest Qt5::Widgets Qt5::Core)
 # linking the libraries Qt5::* to Plugin
 target_link_libraries(FirstPlugin Qt5::Widgets Qt5::Core)
+target_link_libraries(SecondPlugin Qt5::Widgets Qt5::Core)
 
