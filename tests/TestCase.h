@@ -22,7 +22,7 @@ private:
     std::vector<BenchmarkRun> benchmarkRuns;
 
     long long getElapsedTime() {
-        return stopwatch.getMicros();
+        return stopwatch.getNanos();
     }
 
 
