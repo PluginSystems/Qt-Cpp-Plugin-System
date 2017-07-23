@@ -33,7 +33,9 @@ void PluginLoader::loadPlugins() {
 
     for (QString &file : files) {
 
-        QPluginLoader *loader = new QPluginLoader(file);
+        QPluginLoader *loader = new QPluginLoader(QFileInfo(pluginFolder,file).absoluteFilePath());
+
+
 
         QObject *qpl = loader->instance();
 

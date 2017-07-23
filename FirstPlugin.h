@@ -10,11 +10,11 @@
 #include <QtPlugin>
 #include "IPlugin.h"
 
-class TestPlugin : public QObject, public IPlugin {
+class FirstPlugin : public QObject, public IPlugin {
 
 Q_OBJECT
     Q_INTERFACES(IPlugin)
-    Q_PLUGIN_METADATA(IID "de.ysl3000.TestPlugin")
+    Q_PLUGIN_METADATA(IID "de.ysl3000.cpp.qt.FirstPlugin")
 
 public:
     void onEnable() const;
