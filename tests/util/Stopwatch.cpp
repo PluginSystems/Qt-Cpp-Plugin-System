@@ -19,3 +19,7 @@ void Stopwatch::reset() {
 long long int Stopwatch::getMicros() {
     return std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
 }
+
+long long int Stopwatch::getNanos() {
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+}

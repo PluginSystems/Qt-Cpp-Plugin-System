@@ -27,6 +27,8 @@ public:
     void reset();
 
     long long int getMicros();
+
+    long long int getNanos();
 };
 
 
