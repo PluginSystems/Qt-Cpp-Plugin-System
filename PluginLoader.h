@@ -23,7 +23,7 @@ struct PluginHandle{
     void destroy(){
         delete(plugin);
         pluginLoader->unload();
-        //delete(pluginLoader);
+        delete(pluginLoader);
     }
 
 };
