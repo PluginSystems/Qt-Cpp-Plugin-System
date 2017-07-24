@@ -20,3 +20,11 @@ void SecondPlugin::onDisable() const {
 std::string SecondPlugin::getName() const {
     return "SecondPlugin";
 }
+
+std::string SecondPlugin::modifyMessage(std::string message) {
+    return getName() + " returning: "+ message;
+}
+
+void SecondPlugin::printMessage(std::string message) {
+    std::cout << getName() << " saying: " << message << std::endl;
+}

@@ -8,19 +8,23 @@
 
 #include <QObject>
 #include "IPlugin.h"
+#include "StringFace.h"
 
-class SecondPlugin :public QObject, public IPlugin {
+class SecondPlugin :public QObject, public IPlugin, public StringFace {
 
 Q_OBJECT
 Q_INTERFACES(IPlugin)
 Q_PLUGIN_METADATA(IID "de.ysl3000.cpp.qt.SecondPlugin")
 
 public:
-void onEnable() const;
+void onEnable() const override;
 
-void onDisable() const;
+void onDisable() const override;
 
-std::string getName() const;
+std::string getName() const override;
+
+    void printMessage(std::string message) override;
+    std::string modifyMessage(std::string message) override;
 };
 
 
