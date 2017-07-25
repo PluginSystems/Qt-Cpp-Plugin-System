@@ -46,7 +46,7 @@ protected:
     }
 
     std::string getName() override {
-        return "ContextSwitchReturnTypeBenchmark";
+        return "ContextSwitchBenchmark";
     }
 
 };
