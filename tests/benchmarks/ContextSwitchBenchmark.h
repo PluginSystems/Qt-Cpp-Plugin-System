@@ -29,15 +29,13 @@ protected:
 
     void runTest(unsigned long cycle) override {
 
-        startTimer();
-
         IPlugin& plugin = loader.getPlugin("FirstPlugin");
 
+        startTimer();
+
         if(StringFace* face = dynamic_cast<StringFace *>(&plugin)){
-            face->printMessage(getName());
+            face->test();
         }
-
-
 
         stopTimer();
         defineBenchmarkPoint(cycle, getName()+"_"+std::to_string(cycle+1));

@@ -10,7 +10,7 @@
 #include "IPlugin.h"
 #include "StringFace.h"
 
-class SecondPlugin :public QObject, public IPlugin, public StringFace {
+class SecondPlugin :public QObject, public IPlugin {
 
 Q_OBJECT
 Q_INTERFACES(IPlugin)
@@ -23,8 +23,6 @@ void onDisable() const override;
 
 std::string getName() const override;
 
-    void printMessage(std::string message) override;
-    std::string modifyMessage(std::string message) override;
 };
 
 

@@ -26,7 +26,6 @@ set(SOURCE_FILES
         tests/benchmarks/LoadAndUnloadBenchmark.h
         tests/benchmarks/EnableAndDisableBenchmark.h
         tests/benchmarks/ContextSwitchBenchmark.h
-        tests/benchmarks/ContextSwitchReturnTypeBenchmark.h
 
         StringFace.cpp StringFace.h)
 

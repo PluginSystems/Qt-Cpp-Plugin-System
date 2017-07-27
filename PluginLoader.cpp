@@ -12,7 +12,7 @@ PluginLoader::PluginLoader(const std::string &pluginFolder) {
     this->pluginFolder = QDir(QString::fromStdString(pluginFolder));
 
     if (!this->pluginFolder.exists()) {
-        std::cout << "Creating folder: " << pluginFolder << std::endl;
+        //std::cout << "Creating folder: " << pluginFolder << std::endl;
         QDir().mkdir(this->pluginFolder.path());
     }
 }
@@ -53,17 +53,17 @@ void PluginLoader::loadPlugins() {
                 handle.plugin = iPlugin;
 
                 pluginHandles[iPlugin->getName()] = handle;
-                std::cout << "file " << iPlugin->getName() << " loaded " << std::endl;
+                //std::cout << "file " << iPlugin->getName() << " loaded " << std::endl;
             } else {
                 delete (iPlugin);
                 loader->unload();
 
-                std::cout << "Plugin not a IPlugin" << std::endl;
+                //std::cout << "Plugin not a IPlugin" << std::endl;
             }
 
         } else {
 
-            std::cout << " not a Plugin file " << file.fileName().toStdString() << std::endl;
+            //std::cout << " not a Plugin file " << file.fileName().toStdString() << std::endl;
             delete (qpl);
             loader->unload();
         }
@@ -84,7 +84,7 @@ void PluginLoader::unloadPlugins() {
     for (std::unordered_map<std::string, PluginHandle>::iterator it = pluginHandles.begin();
          it != pluginHandles.end();) {
         it->second.destroy();
-        std::cout << "file " << it->first << " unloaded " << std::endl;
+        //std::cout << "file " << it->first << " unloaded " << std::endl;
         pluginHandles.erase(it++);
     }
     hasLoaded = false;

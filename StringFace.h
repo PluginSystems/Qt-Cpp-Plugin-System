@@ -11,11 +11,7 @@
 class StringFace {
 
 public:
-    virtual void printMessage(std::string message)=0;
-
-    virtual std::string modifyMessage(std::string message)=0;
-
-
+    virtual void test()=0;
 };
 
 

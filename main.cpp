@@ -5,7 +5,6 @@
 #include "tests/benchmarks/LoadAndUnloadBenchmark.h"
 #include "tests/benchmarks/EnableAndDisableBenchmark.h"
 #include "tests/benchmarks/ContextSwitchBenchmark.h"
-#include "tests/benchmarks/ContextSwitchReturnTypeBenchmark.h"
 
 
 int main(int argc, char **argv) {
@@ -19,12 +18,11 @@ int main(int argc, char **argv) {
     benchmarks.push_back(std::make_shared<LoadAndUnloadBenchmark>(LoadAndUnloadBenchmark(loader)));
     benchmarks.push_back(std::make_shared<EnableAndDisableBenchmark>(EnableAndDisableBenchmark(loader)));
     benchmarks.push_back(std::make_shared<ContextSwitchBenchmark>(ContextSwitchBenchmark(loader)));
-    benchmarks.push_back(std::make_shared<ContextSwitchReturnTypeBenchmark>(ContextSwitchReturnTypeBenchmark(loader)));
 
 
     // 10 50 70 100 250
 
-    std::list<unsigned long> rounds = {10,50,70,100,250};
+    std::list<unsigned long> rounds = {5000,10000,50000};
 
     long time = std::chrono::system_clock::now().time_since_epoch().count();
 

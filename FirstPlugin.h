@@ -25,9 +25,7 @@ public:
     std::string getName() const override;
 
 
-    std::string modifyMessage(std::string message) override ;
-
-    void printMessage(std::string message) override ;
+    void test() override ;
 
 };
 
