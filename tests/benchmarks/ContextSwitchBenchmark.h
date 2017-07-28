@@ -12,12 +12,20 @@
 #include "../../StringFace.h"
 
 class ContextSwitchBenchmark : public TestCase {
+private:
+
+    StringFace* _face;
+
 public:
     explicit ContextSwitchBenchmark(PluginLoader &pluginLoader) : TestCase(pluginLoader) {}
 
     void setUp() override {
         loader.loadPlugins();
         loader.enablePlugins();
+
+        IPlugin& plugin = loader.getPlugin("FirstPlugin");
+        _face = dynamic_cast<StringFace *>(&plugin);
+
     }
 
     void tearDown() override {
@@ -29,12 +37,12 @@ protected:
 
     void runTest(unsigned long cycle) override {
 
-        IPlugin& plugin = loader.getPlugin("FirstPlugin");
+
 
         startTimer();
 
-        if(StringFace* face = dynamic_cast<StringFace *>(&plugin)){
-            face->test();
+        if(_face!= nullptr){
+            _face->test();
         }
 
         stopTimer();
